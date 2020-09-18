@@ -13,6 +13,10 @@ const Header = () => {
         Courses
       </NavLink>
       {" | "}
+      <NavLink to="/routes" activeStyle={activeStyle}>
+        Routes
+      </NavLink>
+      {" | "}
       <NavLink to="/about" activeStyle={activeStyle}>
         About
       </NavLink>

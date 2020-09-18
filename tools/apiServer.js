@@ -26,7 +26,7 @@ server.use(middlewares);
 server.use(jsonServer.bodyParser);
 
 // Simulate delay on all requests
-server.use(function(req, res, next) {
+server.use(function (req, res, next) {
   setTimeout(next, 2000);
 });
 
@@ -41,12 +41,21 @@ server.use((req, res, next) => {
   next();
 });
 
-server.post("/courses/", function(req, res, next) {
+server.post("/courses/", function (req, res, next) {
   const error = validateCourse(req.body);
   if (error) {
     res.status(400).send(error);
   } else {
     req.body.slug = createSlug(req.body.title); // Generate a slug for new courses.
+    next();
+  }
+});
+server.post("/routes/", function (req, res, next) {
+  const error = validateRoute(req.body);
+  if (error) {
+    res.status(400).send(error);
+  } else {
+    req.body.id = createSlug(req.body.id); // Generate a slug for new courses.
     next();
   }
 });
@@ -71,8 +80,14 @@ function createSlug(value) {
 }
 
 function validateCourse(course) {
+  debugger;
   if (!course.title) return "Title is required.";
   if (!course.authorId) return "Author is required.";
   if (!course.category) return "Category is required.";
+  return "";
+}
+function validateRoute(route) {
+  debugger;
+  if (!route.name) return "Name is required.";
   return "";
 }
