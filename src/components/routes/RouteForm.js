@@ -5,6 +5,9 @@ import SelectInput from "../common/SelectInput";
 
 const RouteForm = ({
   route,
+  grades,
+  locations,
+  routeTypes,
   onSave,
   onChange,
   saving = false,
@@ -25,34 +28,53 @@ const RouteForm = ({
         onChange={onChange}
         error={errors.name}
       />
+
       <TextInput
         name="bolts"
         label="Bolts"
-        value={route.bolts}
+        value={route.bolts.toString()}
         onChange={onChange}
         error={errors.bolts}
       />
 
-      {/*<SelectInput*/}
-      {/*  name="authorId"*/}
-      {/*  label="Author"*/}
-      {/*  value={course.authorId || ""}*/}
-      {/*  defaultOption="Select Author"*/}
-      {/*  options={authors.map((author) => ({*/}
-      {/*    value: author.id,*/}
-      {/*    text: author.name,*/}
-      {/*  }))}*/}
-      {/*  onChange={onChange}*/}
-      {/*  error={errors.author}*/}
-      {/*/>*/}
+      <SelectInput
+        name="grade"
+        label="Grade"
+        value={route.grade.id || ""}
+        defaultOption="Select Grade"
+        options={grades.map((grade) => ({
+          value: grade.id,
+          text: grade.name,
+        }))}
+        onChange={onChange}
+        error={errors.grade}
+      />
 
-      {/*<TextInput*/}
-      {/*  name="category"*/}
-      {/*  label="Category"*/}
-      {/*  value={course.category}*/}
-      {/*  onChange={onChange}*/}
-      {/*  error={errors.category}*/}
-      {/*/>*/}
+      <SelectInput
+        name="type"
+        label="Type"
+        value={route.type.id || ""}
+        defaultOption="Select Type"
+        options={routeTypes.map((routeType) => ({
+          value: routeType.id,
+          text: routeType.name,
+        }))}
+        onChange={onChange}
+        error={errors.type}
+      />
+
+      <SelectInput
+        name="location"
+        label="Location"
+        value={route.location.id || ""}
+        defaultOption="Select Location"
+        options={locations.map((location) => ({
+          value: location.id,
+          text: location.name,
+        }))}
+        onChange={onChange}
+        error={errors.type}
+      />
 
       <button type="submit" disabled={saving} className="btn btn-primary">
         {saving ? "Saving..." : "Save"}
@@ -62,6 +84,9 @@ const RouteForm = ({
 };
 
 RouteForm.propTypes = {
+  grades: PropTypes.array.isRequired,
+  routeTypes: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
   route: PropTypes.object.isRequired,
   errors: PropTypes.object,
   onSave: PropTypes.func.isRequired,

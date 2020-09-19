@@ -366,9 +366,20 @@ const routes = [
   },
 ];
 
+const newRoute = {
+  id: null,
+  name: "",
+  bolts: 0,
+  grade: null,
+  meters: -1,
+  type: null,
+  location: null,
+};
+
 // Using CommonJS style export so we can consume via Node (without using Babel-node)
 module.exports = {
   newCourse,
+  newRoute,
   courses,
   authors,
   locations,

@@ -56,7 +56,6 @@ export function deleteRoute(route) {
     // Doing optimistic delete, so not dispatching begin/end api call
     // actions, or apiCallError action since we're not showing the loading status for this.
     dispatch(deleteRouteOptimistic(route));
-    debugger;
     return routeApi.deleteRoute(route.id);
   };
 }

@@ -12,6 +12,9 @@ export const CREATE_ROUTE = "CREATE_ROUTE";
 export const LOAD_ROUTES_SUCCESS = "LOAD_ROUTES_SUCCESS";
 export const CREATE_ROUTE_SUCCESS = "CREATE_ROUTE_SUCCESS";
 export const UPDATE_ROUTE_SUCCESS = "UPDATE_ROUTE_SUCCESS";
+export const LOAD_LOCATIONS_SUCCESS = "LOAD_LOCATIONS_SUCCESS";
+export const LOAD_GRADES_SUCCESS = "LOAD_GRADES_SUCCESS";
+export const LOAD_TYPES_SUCCESS = "LOAD_TYPES_SUCCESS";
 
 // By convention, actions that end in "_SUCCESS" are assumed to have been the result of a completed
 // API call. But since we're doing an optimistic delete, we're hiding loading state.

@@ -55,7 +55,7 @@ server.post("/routes/", function (req, res, next) {
   if (error) {
     res.status(400).send(error);
   } else {
-    req.body.id = createSlug(req.body.id); // Generate a slug for new courses.
+    req.body.id = generateId(); // Generate a slug for new courses.
     next();
   }
 });
@@ -71,6 +71,13 @@ server.listen(port, () => {
 
 // Centralized logic
 
+function generateId() {
+  // let ldb = router.db;
+  // console.dir(ldb);
+  let min = 1000;
+  let max = 99999999999;
+  return Math.random() * (max - min) + min;
+}
 // Returns a URL friendly slug
 function createSlug(value) {
   return value
@@ -80,14 +87,13 @@ function createSlug(value) {
 }
 
 function validateCourse(course) {
-  debugger;
   if (!course.title) return "Title is required.";
   if (!course.authorId) return "Author is required.";
   if (!course.category) return "Category is required.";
   return "";
 }
 function validateRoute(route) {
-  debugger;
   if (!route.name) return "Name is required.";
+  //if (!route.locationId) return "Location is required.";
   return "";
 }

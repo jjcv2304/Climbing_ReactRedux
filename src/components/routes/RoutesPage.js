@@ -38,6 +38,15 @@ class RoutesPage extends React.Component {
     }
   };
 
+  handleUpdateRoute = async (route) => {
+    this.props.history.push("/route/" + route.id);
+  };
+
+  handleAddRoute = async () => {
+    this.setState({ redirectToAddRoutePage: true });
+    this.props.history.push("/route/");
+  };
+
   render() {
     return (
       <>
@@ -47,17 +56,12 @@ class RoutesPage extends React.Component {
         ) : (
           <>
             <div className="d-flex justify-content-between">
-              <h2>Routes</h2>
-              <button
-                style={{ marginBottom: 20 }}
-                className="btn btn-primary add-route"
-                onClick={() => this.setState({ redirectToAddRoutePage: true })}
-              >
-                Add Route
-              </button>
+              <h4>Routes</h4>
             </div>
             <RouteList
               onDeleteClick={this.handleDeleteRoute}
+              onUpdateClick={this.handleUpdateRoute}
+              onAddClick={this.handleAddRoute}
               routes={this.props.routes}
             />
           </>
@@ -74,6 +78,7 @@ RoutesPage.propTypes = {
   routes: PropTypes.array.isRequired,
   actions: PropTypes.object.isRequired,
   loading: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 function mapStateToProps(state) {

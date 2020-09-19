@@ -6,21 +6,28 @@ import RouteForm from "./RouteForm";
 import { newRoute } from "../../../tools/mockData";
 import Spinner from "../common/Spinner";
 import { toast } from "react-toastify";
+import { loadLocations } from "../../redux/actions/locationActions";
+import { loadTypes } from "../../redux/actions/typeActions";
+import { loadGrades } from "../../redux/actions/gradeActions";
 
 export function ManageRoutePage({
   routes,
+  locations,
+  grades,
+  routeTypes,
   loadRoutes,
+  loadLocations,
+  loadTypes,
+  loadGrades,
   saveRoute,
   history,
   ...props
 }) {
-  debugger;
   const [route, setRoute] = useState({ ...props.route });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
 
   useEffect(() => {
-    debugger;
     if (routes.length === 0) {
       loadRoutes().catch((error) => {
         alert("Loading routes failed" + error);
@@ -29,18 +36,39 @@ export function ManageRoutePage({
       setRoute({ ...props.route });
     }
 
-    // if (authors.length === 0) {
-    //   loadAuthors().catch((error) => {
-    //     alert("Loading authors failed" + error);
-    //   });
-    // }
+    if (locations.length === 0) {
+      loadLocations().catch((error) => {
+        alert("Loading locations failed" + error);
+      });
+    }
+    if (grades.length === 0) {
+      loadGrades().catch((error) => {
+        alert("Loading grades failed" + error);
+      });
+    }
+    if (routeTypes.length === 0) {
+      loadTypes().catch((error) => {
+        alert("Loading types failed" + error);
+      });
+    }
   }, [props.route]);
 
   function handleChange(event) {
     const { name, value } = event.target;
+    let newValue = value;
+    if (name === "type") {
+      newValue =
+        routeTypes.find((routeType) => routeType.id === +value) || null;
+    }
+    if (name === "grade") {
+      newValue = grades.find((grade) => grade.id === +value) || null;
+    }
+    if (name === "location") {
+      newValue = locations.find((location) => location.id === +value) || null;
+    }
     setRoute((prevRoute) => ({
       ...prevRoute,
-      [name]: value,
+      [name]: newValue,
     }));
   }
 
@@ -72,7 +100,10 @@ export function ManageRoutePage({
       });
   }
 
-  return routes.length === 0 ? (
+  return routes.length === 0 ||
+    locations.length === 0 ||
+    grades.length === 0 ||
+    routeTypes.length === 0 ? (
     <Spinner />
   ) : (
     <RouteForm
@@ -81,6 +112,9 @@ export function ManageRoutePage({
       onChange={handleChange}
       onSave={handleSave}
       saving={saving}
+      grades={grades}
+      locations={locations}
+      routeTypes={routeTypes}
     />
   );
 }
@@ -88,32 +122,39 @@ export function ManageRoutePage({
 ManageRoutePage.propTypes = {
   route: PropTypes.object.isRequired,
   routes: PropTypes.array.isRequired,
+  locations: PropTypes.array.isRequired,
+  grades: PropTypes.array.isRequired,
+  routeTypes: PropTypes.array.isRequired,
   loadRoutes: PropTypes.func.isRequired,
+  loadLocations: PropTypes.func.isRequired,
+  loadTypes: PropTypes.func.isRequired,
+  loadGrades: PropTypes.func.isRequired,
   saveRoute: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
 export function getRouteById(routes, id) {
-  let route = routes.find((route) => route.id === +id) || null;
-  console.dir(route);
-  debugger;
-  return route;
+  return routes.find((route) => route.id === +id) || null;
 }
 
 function mapStateToProps(state, ownProps) {
-  debugger;
   const id = ownProps.match.params.id;
   const route =
     id && state.routes.length > 0 ? getRouteById(state.routes, id) : newRoute;
-  debugger;
   return {
     route,
     routes: state.routes,
+    locations: state.locations,
+    routeTypes: state.routeTypes,
+    grades: state.grades,
   };
 }
 
 const mapDispatchToProps = {
   loadRoutes,
+  loadLocations,
+  loadTypes,
+  loadGrades,
   saveRoute,
 };
 
