@@ -59,10 +59,10 @@ class RoutesPage extends React.Component {
               <h4>Routes</h4>
             </div>
             <RouteList
+              routes={this.props.routes}
               onDeleteClick={this.handleDeleteRoute}
               onUpdateClick={this.handleUpdateRoute}
               onAddClick={this.handleAddRoute}
-              routes={this.props.routes}
             />
           </>
         )}

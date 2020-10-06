@@ -14,8 +14,8 @@ export function updateRouteSuccess(route) {
   return { type: types.UPDATE_ROUTE_SUCCESS, route };
 }
 
-export function deleteRouteOptimistic(course) {
-  return { type: types.DELETE_ROUTE_OPTIMISTIC, course };
+export function deleteRouteOptimistic(route) {
+  return { type: types.DELETE_ROUTE_OPTIMISTIC, route };
 }
 
 export function loadRoutes() {
